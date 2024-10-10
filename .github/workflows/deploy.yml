@@ -22,9 +22,10 @@ jobs:
         env:
           SERVER_IP: ${{ secrets.SERVER_IP }}
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@$SERVER_IP << 'EOF'
-            cd /srv/Docker/SitioGenerito
-            git pull origin main
-            docker-compose down
-            docker-compose up -d --build
-          EOF
+            ssh -o StrictHostKeyChecking=no ubuntu@$SERVER_IP << 'EOF'
+                git config --global --add safe.directory /srv/Docker/SitioGenerito
+                cd /srv/Docker/SitioGenerito
+                git pull origin main
+                docker-compose down
+                docker-compose up -d --build
+            EOF
