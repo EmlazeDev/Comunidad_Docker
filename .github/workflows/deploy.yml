@@ -23,7 +23,7 @@ jobs:
           SERVER_IP: ${{ secrets.SERVER_IP }}
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@$SERVER_IP << 'EOF'
-            cd /srv/Docker/
+            cd /srv/Docker/SitioGenerito
             git pull origin main
             docker-compose down
             docker-compose up -d --build
