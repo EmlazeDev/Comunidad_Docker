@@ -19,9 +19,11 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Deploy to server
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@<IP_DEL_SERVIDOR> << 'EOF'
-            cd srv/Docker/
+          ssh -o StrictHostKeyChecking=no ubuntu@$SERVER_IP << 'EOF'
+            cd /srv/Docker/
             git pull origin main
             docker-compose down
             docker-compose up -d --build
