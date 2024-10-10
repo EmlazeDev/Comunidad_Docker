@@ -1,0 +1,31 @@
+version: '4'
+
+services:
+  php:
+    container_name: php_emlaze
+    image: davidch244/mi-php-con-pdo:emlazeV3
+    ports:
+      - 8080:80
+    volumes:
+      - ./:/var/www/html
+      - ./php.ini:/usr/local/etc/php/php.ini
+    command: [ "bash", "-c", "apache2-foreground" ]
+
+  db:
+    container_name: mysql_emlaze
+    image: mysql:8.0.36
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: emlaze6290#
+      MYSQL_USER: genoma
+      MYSQL_PASSWORD: emlaze6290#
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+      - ./my.cnf:/etc/my.cnf
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: [ "bash", "-c", "chmod 644 /etc/my.cnf && docker-entrypoint.sh --datadir /var/lib/mysql --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci" ]
+
+volumes:
+  db:
